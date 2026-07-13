@@ -4,6 +4,41 @@ import sqlite3
 app = Flask(__name__)
 app.secret_key = "futureping123"
 
+
+# ---------------- DATABASE ---------------- #
+
+def init_db():
+    conn = sqlite3.connect("futureping.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS students(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        fullname TEXT,
+        email TEXT UNIQUE,
+        password TEXT,
+        branch TEXT,
+        career TEXT
+    )
+    """)
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS opportunities(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        title TEXT,
+        company TEXT,
+        type TEXT,
+        link TEXT
+    )
+    """)
+
+    conn.commit()
+    conn.close()
+
+
+init_db()
+
+
 # ---------------- HOME ---------------- #
 
 @app.route("/")
@@ -27,12 +62,18 @@ def register():
         conn = sqlite3.connect("futureping.db")
         cursor = conn.cursor()
 
-        cursor.execute("""
-        INSERT INTO students(fullname,email,password,branch,career)
-        VALUES(?,?,?,?,?)
-        """, (fullname, email, password, branch, career))
+        try:
+            cursor.execute("""
+            INSERT INTO students(fullname,email,password,branch,career)
+            VALUES(?,?,?,?,?)
+            """, (fullname, email, password, branch, career))
 
-        conn.commit()
+            conn.commit()
+
+        except sqlite3.IntegrityError:
+            conn.close()
+            return "Email already registered."
+
         conn.close()
 
         return redirect("/login")
@@ -75,8 +116,7 @@ def login():
 
             return redirect("/dashboard")
 
-        else:
-            return "Invalid Email or Password"
+        return "Invalid Email or Password"
 
     return render_template("login.html")
 
@@ -117,7 +157,9 @@ def profile():
     conn.close()
 
     return render_template("profile.html", user=user)
-    # ---------------- OPPORTUNITIES ---------------- #
+
+
+# ---------------- OPPORTUNITIES ---------------- #
 
 @app.route("/opportunities")
 def opportunities():
@@ -130,22 +172,11 @@ def opportunities():
     conn = sqlite3.connect("futureping.db")
     cursor = conn.cursor()
 
-    cursor.execute("""
-    CREATE TABLE IF NOT EXISTS opportunities(
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        title TEXT,
-        company TEXT,
-        type TEXT,
-        link TEXT
-    )
-    """)
-
-    conn.commit()
-
     cursor.execute("SELECT COUNT(*) FROM opportunities")
     count = cursor.fetchone()[0]
 
     if count == 0:
+
         sample_data = [
             ("Google AI Internship", "Google", "Internship", "https://careers.google.com/"),
             ("Amazon Future Engineer", "Amazon", "Scholarship", "https://www.amazonfutureengineer.com/"),
@@ -187,7 +218,7 @@ def opportunities():
     )
 
 
-# ---------------- ADMIN PANEL ---------------- #
+# ---------------- ADMIN ---------------- #
 
 @app.route("/admin", methods=["GET", "POST"])
 def admin():
@@ -203,19 +234,9 @@ def admin():
         cursor = conn.cursor()
 
         cursor.execute("""
-        CREATE TABLE IF NOT EXISTS opportunities(
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            title TEXT,
-            company TEXT,
-            type TEXT,
-            link TEXT
-        )
-        """)
-
-        cursor.execute(
-            "INSERT INTO opportunities(title,company,type,link) VALUES(?,?,?,?)",
-            (title, company, type, link)
-        )
+        INSERT INTO opportunities(title,company,type,link)
+        VALUES(?,?,?,?)
+        """, (title, company, type, link))
 
         conn.commit()
         conn.close()
