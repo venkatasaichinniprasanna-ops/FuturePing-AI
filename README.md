@@ -1,6 +1,47 @@
-FuturePing AI is an intelligent web application designed to help students easily discover and access career opportunities from a single platform.
-Developed using Python, Flask, HTML, CSS, and SQLite, the system provides a secure registration and login process, a personalized dashboard, AI-based opportunity recommendations based on the student's career goals,and a profile management system. 
-Students can search and explore internships, scholarships, hackathons, workshops, certifications, and competitions, while the integrated Admin Panel allows administrators to add and manage opportunities dynamically through a database.
-Each opportunity includes a direct link to the official application website, making the application process simple and efficient. 
-The project aims to reduce the time students spend searching across multiple websites by bringing all relevant opportunities together in one user-friendly platform. 
-It also demonstrates practical implementation of web development, database management, authentication, and basic AI recommendation concepts using the Flask framework.
+# FuturePing AI
+
+Transforming student career guidance into personalized opportunities using AI and an interactive web platform.
+
+## 🌐 Live Demo
+https://futureping-ai.onrender.com/
+
+## 📌 Project Overview
+FuturePing AI is an AI-powered career guidance platform that helps students discover internships, scholarships, hackathons, certifications, workshops, and competitions from a single platform. The system provides personalized recommendations based on the student's branch and career goal.
+
+## ✨ Features
+- Student Registration & Login
+- Personalized Dashboard
+- AI-based Career Recommendations
+- Search Opportunities
+- Internship & Scholarship Listings
+- Hackathons & Workshops
+- Student Profile Management
+- Admin Panel to Add Opportunities
+- Responsive User Interface
+
+## 🛠️ Technologies Used
+- Python
+- Flask
+- HTML
+- CSS
+- SQLite
+- Jinja2
+- Render (Deployment)
+- Git & GitHub
+
+## 📊 Database
+The application uses SQLite with two tables:
+- Students
+- Opportunities
+
+## 🚀 Future Scope
+- Resume Analyzer
+- AI Chatbot for Career Guidance
+- Email Notifications
+- Saved Opportunities
+- Company Recommendations
+- Placement Prediction
+- Interview Preparation Module
+
+## 👨‍💻 Developed By
+**Venkata Sai Chinni Prasanna**
