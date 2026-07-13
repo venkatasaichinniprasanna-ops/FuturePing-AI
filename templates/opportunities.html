@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FuturePing AI - Opportunities</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<nav>
+
+    <h2>🚀 FuturePing AI</h2>
+
+    <ul>
+        <li><a href="/dashboard">Dashboard</a></li>
+        <li><a href="/profile">Profile</a></li>
+        <li><a href="/admin">Admin</a></li>
+        <li><a href="/logout">Logout</a></li>
+    </ul>
+
+</nav>
+
+<div class="dashboard">
+
+    <h1>Latest Opportunities</h1>
+
+    <form method="GET" action="/opportunities">
+
+        <input
+            type="text"
+            name="search"
+            class="search-box"
+            placeholder="🔍 Search internships, scholarships, hackathons..."
+            value="{{ request.args.get('search','') }}">
+
+        <button type="submit">Search</button>
+
+    </form>
+
+    <br>
+
+    <div class="cards">
+
+        {% if opportunities %}
+
+            {% for item in opportunities %}
+
+            <div class="card">
+
+                <h3>{{ item[1] }}</h3>
+
+                <p><b>Company:</b> {{ item[2] }}</p>
+
+                <p><b>Type:</b> {{ item[3] }}</p>
+
+                <a href="{{ item[4] }}" target="_blank">
+                    <button>Apply Now</button>
+                </a>
+
+            </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <h3>No Opportunities Found.</h3>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+<footer>
+
+    <h3>FuturePing AI © 2026</h3>
+
+</footer>
+
+</body>
+</html>

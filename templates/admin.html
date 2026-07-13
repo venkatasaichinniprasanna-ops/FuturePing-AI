@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - FuturePing AI</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<nav>
+
+    <h2>🚀 FuturePing AI - Admin</h2>
+
+    <ul>
+        <li><a href="/dashboard">Dashboard</a></li>
+        <li><a href="/opportunities">Opportunities</a></li>
+        <li><a href="/logout">Logout</a></li>
+    </ul>
+
+</nav>
+
+<div class="container">
+
+    <h1>Add New Opportunity</h1>
+
+    <form method="POST">
+
+        <input
+            type="text"
+            name="title"
+            placeholder="Opportunity Title"
+            required>
+
+        <input
+            type="text"
+            name="company"
+            placeholder="Company Name"
+            required>
+
+        <input
+            type="text"
+            name="type"
+            placeholder="Internship / Scholarship / Hackathon"
+            required>
+
+        <input
+            type="url"
+            name="link"
+            placeholder="Application Link"
+            required>
+
+        <button type="submit">
+            ➕ Add Opportunity
+        </button>
+
+    </form>
+
+    <br>
+
+    <a href="/dashboard">
+        <button>
+            ⬅ Back to Dashboard
+        </button>
+    </a>
+
+</div>
+
+</body>
+</html>
